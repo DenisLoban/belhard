@@ -9,13 +9,13 @@ from django.views.generic import ListView, DetailView
 from slugify import slugify
 from .forms import PostModelForm
 
-from .models import Post
+from .models import Post, Portfolio, Team
 
 
 class PostListView(ListView):
-    model = Post
-    # context_object_name = 'post_sit'
-    # template_name = 'post_list.html' #формируется атоматически
+    model = Portfolio
+    context_object_name = 'portfolio_items'
+    template_name = 'blog/index.html' #формируется атоматически и потом поменяли на блог.индекс
     http_method_names = ('get', 'post')  # переопределение для ускорения работы вместо списка- кортеж
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -27,18 +27,18 @@ class PostListView(ListView):
         data = request.POST.dict()
         data.update(slug=slugify(request.POST.get('title')))
         form = PostModelForm(data)
-        # if form.is_valid():
-        #     form.save()
+        if form.is_valid():
+            form.save()
         return self.get(request=request)
 
     def get_queryset(self):
-        return Post.objects.filter(is_published=True)
+        return Portfolio.objects.all()
 
 
 class PostDetailView(DetailView):
     model = Post
     slug_url_kwarg = 'post_slug'
-    http_method_names = ('get',)
+    http_method_names = ('get', )
 
     def get_object(self, queryset=None):
         slug = self.kwargs.get(self.slug_url_kwarg)
@@ -52,6 +52,7 @@ class PostDetailView(DetailView):
     def page_not_found(request, exception):
         print(exception)
         return HttpResponse('<b>404 PAGE NOT FOUND</b>')
+
 
 # def get(self, request, *args, **kwargs):
 #     posts = self.get_queryset()

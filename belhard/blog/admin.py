@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import StackedInline
 
-from .models import Category, Post
+from .models import Category, Post, Portfolio, Team
 
 class PostInleneModelAdmin(StackedInline):
     model = Post
@@ -32,4 +32,11 @@ class PostAdmin(admin.ModelAdmin):
     readonly_fields = ('date_created', )
     actions = (make_unpublished, make_published)
 
+@admin.register(Portfolio)
+class PortfolioAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    pass
 

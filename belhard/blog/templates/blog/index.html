@@ -1,0 +1,27 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+HOME
+{% endblock %}
+
+{% block content %}
+
+        {% include "blog/header.html" %}
+        {% include "blog/services.html" %}
+
+        {% include "blog/portfolio.html" %}
+        {% include "blog/about.html" %}
+        {% include "blog/team.html" %}
+        {% include "blog/clients.html" %}
+        {% include "blog/contact.html" %}
+
+        {% for item in portfolio_items %}
+        {% include "blog/portfolio_model.html" %}
+        {% endfor %}
+
+        {% for teams in team_members %}
+        {% include "blog/team_member.html" %}
+        {% endfor %}
+
+{% endblock %}
+
